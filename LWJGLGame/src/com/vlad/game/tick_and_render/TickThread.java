@@ -1,7 +1,10 @@
 package com.vlad.game.tick_and_render;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import org.lwjgl.opengl.GL;
 import static org.lwjgl.system.MemoryUtil.*;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 import org.lwjgl.glfw.GLFWVidMode;
 
@@ -41,7 +44,7 @@ public class TickThread implements Runnable
 	
 	//Method executed constantly while running
 	public void run ()
-	{
+	{	
 		while(Main.running)
 		{
 			tick();
@@ -60,6 +63,7 @@ public class TickThread implements Runnable
 		{
 			System.out.println("Space Was Pressed");
 		}
+		
 	}
 	
 	//Method for initializing window
@@ -85,8 +89,16 @@ public class TickThread implements Runnable
 		
 		glfwSetKeyCallback(window, new Input());
 		
+		
 		glfwMakeContextCurrent(window);
+		GL.createCapabilities();
+		
 		glfwShowWindow(window);
+		
+		
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glEnable(GL_DEPTH_TEST);
+		System.out.println("OpenGL : " + glGetString(GL_VERSION));
 	}
 	
 }//ClassEnd
