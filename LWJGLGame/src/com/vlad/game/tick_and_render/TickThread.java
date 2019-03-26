@@ -1,16 +1,18 @@
 package com.vlad.game.tick_and_render;
 
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import org.lwjgl.opengl.GL;
 import static org.lwjgl.system.MemoryUtil.*;
 
-import static org.lwjgl.glfw.GLFW.*;
-
 import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
 
-import com.vlad.game.Main;
+import com.vlad.game.Cache;
 import com.vlad.game.input.Input;
 
+/*
+ * Class responsible for the logic thread (Mutex for Cache)
+ */
 public class TickThread implements Runnable
 {
 	//Window Size
@@ -33,7 +35,7 @@ public class TickThread implements Runnable
 	//Method for initializing, then starting the game : Tick and Render threads
 	public void start()
 	{
-		Main.running = true;
+		Cache.running = true;
 		init();
 		
 		new RenderThread(window).start();
@@ -42,21 +44,25 @@ public class TickThread implements Runnable
 		tickThread.start();
 	}
 	
-	//Method executed constantly while running
+	//Method executed in the thread. Keeps calculating and updating while game is running
 	public void run ()
 	{	
-		while(Main.running)
+		while(Cache.running)
 		{
 			tick();
 			
 			if(glfwWindowShouldClose(window) == true)
-				Main.running = false;
+				Cache.running = false;
 		}
 	}
 	
 	//Method for logic updates, called every frame
 	private void tick()
 	{
+		//Make context current then create capabilities (needed because it is used in two threads)
+		glfwMakeContextCurrent(window);
+		GL.createCapabilities();
+		
 		glfwPollEvents();
 		
 		if (Input.keys[GLFW_KEY_SPACE])
@@ -99,6 +105,8 @@ public class TickThread implements Runnable
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 		System.out.println("OpenGL : " + glGetString(GL_VERSION));
+		
+		Cache.loadAll();
 	}
 	
 }//ClassEnd

@@ -10,15 +10,29 @@ import javax.imageio.ImageIO;
 
 import com.vlad.game.utils.BufferUtils;
 
+/*
+ * Class responsible of loading an image and offer it to the OpenGL to be rendered
+ */
 public class Texture {
+	
+	//Width and height of the image
 	private int width, height;
+	
+	//Current texture's ID
 	private int texture;
 	
+	/*
+	 * The constructor takes the path to the image and loads it into the OpenGL, giving it an ID
+	 */
 	public Texture(String path)
 	{
 		texture = load(path);
 	}
 	
+	/*
+	 * Load method takes the image from the path, then transforms it in an OpenGL texture
+	 * (Basically puts every pixel's ARGB in order ABGR)
+	 */
 	public int load(String path)
 	{
 		int[] pixels = null;
@@ -55,11 +69,13 @@ public class Texture {
 		return result;
 	}
 	
+	//Bind texture to OpenGL
 	public void bind()
 	{
 		glBindTexture(GL_TEXTURE_2D, texture);
 	}
 	
+	//Unbind texture from OpenGL
 	public void unbind()
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);

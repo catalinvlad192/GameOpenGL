@@ -4,10 +4,13 @@ import java.nio.FloatBuffer;
 
 import com.vlad.game.utils.BufferUtils;
 
+/*
+ * Class for different 4*4 matrixes and their operations
+ */
 public class Matrix4f {
 	
+	//Attributes
 	public static final int SIZE = 4*4;
-	
 	public float[] elements = new float[SIZE];
 	
 	public Matrix4f()

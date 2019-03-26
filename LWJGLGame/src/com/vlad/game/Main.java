@@ -1,26 +1,23 @@
 package com.vlad.game;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryUtil.*;
-
-import static java.nio.ByteBuffer.*;
-
-import org.lwjgl.glfw.GLFWVidMode;
-
-import com.vlad.game.input.Input;
 import com.vlad.game.tick_and_render.TickThread;
 
+/*
+ * Class that puts everything in motion.
+ */
 public class Main{
 	
-	//Check if game is running
-	public static boolean running = true;
-	
+	/*
+	 * Main function.
+	 */
 	public static void main(String[] args) 
 	{
 		new Main().start();
 	}
 
+	/*
+	 * Starts the control thread which starts the render thread.
+	 */
 	public void start()
 	{
 		new TickThread().start();

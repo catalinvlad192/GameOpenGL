@@ -3,6 +3,9 @@ package com.vlad.game.input;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
 
+/*
+ * Class responsible of listening to key press
+ */
 public class Input extends GLFWKeyCallback{
 	
 	//Boolean array for checking if a key is pressed

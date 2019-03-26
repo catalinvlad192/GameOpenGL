@@ -1,5 +1,8 @@
 package com.vlad.game.math;
 
+/*
+ * Class for Vector sized 3
+ */
 public class Vector3f {
 	
 	public float x, y, z;

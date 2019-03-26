@@ -19,7 +19,7 @@ public class FileUtils {
 			
 			while((buffer = reader.readLine()) != null)
 			{
-				result.append(buffer);
+				result.append(buffer + "\n");
 			}
 			reader.close();
 		} catch(IOException e) {
