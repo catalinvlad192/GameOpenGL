@@ -2,6 +2,7 @@ package com.vlad.game.tick_and_render;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 import org.lwjgl.glfw.GLFWVidMode;
@@ -47,9 +48,31 @@ public class TickThread implements Runnable
 	//Method executed in the thread. Keeps calculating and updating while game is running
 	public void run ()
 	{	
+		//Run it 60 frames per second
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		double ns = 1000000000.0 / 60;
+		double delta = 0.0;
+		int ticks = 0;
+		
 		while(Cache.running)
 		{
-			tick();
+			long now = System.nanoTime();
+			delta+= (now - lastTime) / ns;
+			lastTime = now;
+			if(delta >= 1.0)
+			{
+				tick();
+				delta--;
+				ticks++;
+			}
+			
+			if(System.currentTimeMillis() - timer >1000)
+			{
+				timer+=1000;
+				System.out.println("[TickThread] Ticks and Frames: " + ticks);
+				ticks = 0;
+			}
 			
 			if(glfwWindowShouldClose(window) == true)
 				Cache.running = false;
@@ -64,6 +87,7 @@ public class TickThread implements Runnable
 		GL.createCapabilities();
 		
 		glfwPollEvents();
+		Cache.level.tick();
 		
 		if (Input.keys[GLFW_KEY_SPACE])
 		{
@@ -104,7 +128,8 @@ public class TickThread implements Runnable
 		
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
-		System.out.println("OpenGL : " + glGetString(GL_VERSION));
+		glActiveTexture(GL_TEXTURE1);
+		System.out.println("[TickThread] OpenGL : " + glGetString(GL_VERSION));
 		
 		Cache.loadAll();
 	}

@@ -18,8 +18,12 @@ public class Shader {
 	public static final int VERTEX_ATTRIB = 0;
 	public static final int TCOORD_ATTRIB = 1; //Texture Coordinates
 	
+	//Enable or disable all shaders
+	public static boolean enabled = false;
+	
 	//Current shader's ID
 	private final int ID;
+	
 	
 	//Location cache for holding variable name and the location integer
 	private Map<String, Integer> locationCache = new HashMap<String, Integer>();
@@ -56,30 +60,35 @@ public class Shader {
 	//Set int location of the shader
 	public void setUniform1i(String name, int value)
 	{
+		if(!Shader.enabled) enable();
 		glUniform1i(getUniform(name), value);
 	}
 	
 	//Set float location of the shader
 	public void setUniform1f(String name, float value)
 	{
+		if(!Shader.enabled) enable();
 		glUniform1f(getUniform(name), value);
 	}
 	
 	//Set double float location of the shader
 	public void setUniform2f(String name, float x, float y)
 	{
+		if(!Shader.enabled) enable();
 		glUniform2f(getUniform(name), x, y);
 	}
 	
 	//Set triple float location of the shader
 	public void setUniform3f(String name, Vector3f vector)
 	{
+		if(!Shader.enabled) enable();
 		glUniform3f(getUniform(name), vector.x, vector.y, vector.z);
 	}
 	
 	//Set matrix location of the shader
 	public void setUniformMat4f(String name, Matrix4f matrix)
 	{
+		if(!Shader.enabled) enable();
 		glUniformMatrix4fv(getUniform(name), false, matrix.toFloatBuffer());
 	}
 	
@@ -87,11 +96,13 @@ public class Shader {
 	public void enable()
 	{
 		glUseProgram(ID);
+		Shader.enabled = true;
 	}
 	
 	//Disable the Shader program
 	public void disable()
 	{
 		glUseProgram(0);
+		Shader.enabled = false;
 	}
 }

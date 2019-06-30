@@ -1,6 +1,7 @@
 package com.vlad.game;
 
 import com.vlad.game.graphics.Shader;
+import com.vlad.game.level.Level;
 import com.vlad.game.math.Matrix4f;
 
 /*
@@ -16,6 +17,9 @@ public class Cache {
 	//Check if game is running
 	public static boolean running = true;
 	
+	//Current level
+	public static Level level;
+	
 	
 	/*
 	 * Initialize and load all the attributes
@@ -26,6 +30,7 @@ public class Cache {
 		BG.enable();
 		Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f, 10.0f, -10.0f*9.0f/16.0f, 10.0f*9.0f/16.0f, -1.0f, 1.0f);
 		BG.setUniformMat4f("pr_matrix", pr_matrix);
+		BG.setUniform1i("tex", 1);
 		BG.disable();
 	}
 

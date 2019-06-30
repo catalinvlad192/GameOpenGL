@@ -12,9 +12,6 @@ import com.vlad.game.level.Level;
  * Class responsible for the rendering thread (Mutex for Cache)
  */
 public class RenderThread implements Runnable{
-	
-	//Probably should be in Cache
-	private Level level;
 
 	//This class's thread : RENDER
 	private Thread renderThread;
@@ -25,7 +22,7 @@ public class RenderThread implements Runnable{
 	//Constructor
 	public RenderThread(long window)
 	{
-		level = new Level();
+		Cache.level = new Level();
 		this.window = window;
 		glfwMakeContextCurrent(window);
 		GL.createCapabilities();
@@ -55,7 +52,13 @@ public class RenderThread implements Runnable{
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		level.render();		//Render the level
+		Cache.level.render();		//Render the level
+		
+		int error = glGetError();
+		if(error != GL_NO_ERROR)
+		{
+			System.out.println("[RenderThread] GL Error: " + error);
+		}
 		
 		glfwSwapBuffers(window);
 		
