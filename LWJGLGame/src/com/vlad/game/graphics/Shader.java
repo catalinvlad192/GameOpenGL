@@ -9,9 +9,7 @@ import com.vlad.game.math.Matrix4f;
 import com.vlad.game.math.Vector3f;
 import com.vlad.game.utils.ShaderUtils;
 
-/*
- * Class responsible of holding and creating shader programs that run on the GPU.
- */
+//Class responsible of holding and creating shader programs that run on the GPU.
 public class Shader {
 	
 	//Attributes
@@ -105,4 +103,5 @@ public class Shader {
 		glUseProgram(0);
 		Shader.enabled = false;
 	}
-}
+}//Shader
+

@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL30.*;
 import com.vlad.game.utils.BufferUtils;
 
 /*
- * Class responsible of holding an array of vertices [points/vertex(es)]
+ * Class responsible of holding an array of vertices [points/vertex(es)](Mesh)
  */
 public class VertexArray 
 {
@@ -76,6 +76,4 @@ public class VertexArray
 		bind();
 		draw();
 	}
-}
-
-
+}//VertexArray
