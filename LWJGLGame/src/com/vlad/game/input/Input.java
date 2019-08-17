@@ -9,12 +9,12 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 public class Input extends GLFWKeyCallback{
 	
 	//Boolean array for checking if a key is pressed
-	public static boolean[] keys = new boolean[65536];
+	public static boolean[] keys = new boolean[256];
 
 	//Method called every time a key is pressed
 	public void invoke(long window,  int key, int scancode, int action, int mods)
 	{
-		keys[key] = action == GLFW.GLFW_PRESS;
+		keys[key] = (action == GLFW.GLFW_PRESS) || (action == GLFW.GLFW_REPEAT);
 	}
 	
 }//ClassEnd
